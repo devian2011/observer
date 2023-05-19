@@ -31,11 +31,11 @@ func (o *Observer) Notify(code EventCode, data EventData) {
 	}
 }
 
-func (o *Observer) Register(code EventCode, handler EventHandler) {
+func (o *Observer) Register(code EventCode, handlers ...EventHandler) {
 	if _, exists := o.handlers[code]; !exists {
 		o.handlers[code] = make([]EventHandler, 0)
 	}
-	o.handlers[code] = append(o.handlers[code], handler)
+	o.handlers[code] = append(o.handlers[code], handlers...)
 }
 
 func (o *Observer) EventCodes() []EventCode {
