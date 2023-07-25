@@ -15,8 +15,13 @@ type Observer struct {
 	handlers map[EventCode][]EventHandler
 }
 
-var observer = &Observer{
-	handlers: make(map[EventCode][]EventHandler),
+var observer = New()
+
+func New() *Observer {
+	return &Observer{
+		handlers: make(map[EventCode][]EventHandler),
+		wg:       &sync.WaitGroup{},
+	}
 }
 
 func (o *Observer) Notify(code EventCode, data EventData) {
