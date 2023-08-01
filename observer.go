@@ -36,6 +36,14 @@ func (o *Observer) Notify(code EventCode, data EventData) {
 	}
 }
 
+func (o *Observer) NotifySync(code EventCode, data EventData) {
+	if handlers, exists := o.handlers[code]; exists {
+		for _, h := range handlers {
+			h(data)
+		}
+	}
+}
+
 func (o *Observer) Register(code EventCode, handlers ...EventHandler) {
 	if _, exists := o.handlers[code]; !exists {
 		o.handlers[code] = make([]EventHandler, 0)
@@ -78,6 +86,10 @@ func (o *Observer) Wait() {
 
 func Notify(code EventCode, data EventData) {
 	observer.Notify(code, data)
+}
+
+func NotifySync(code EventCode, data EventData) {
+	observer.NotifySync(code, data)
 }
 
 func Register(code EventCode, handler EventHandler) {

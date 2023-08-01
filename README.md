@@ -35,8 +35,9 @@ func main() {
 		date: time.Now(),
 		action: "boot",
     }
-	
-	observer.Notify("onApplicationStart", start)
+
+	observer.Notify("onApplicationStart", start) //Async notification
+	observer.NotifySync("onApplicationStart", start) // Sync notification (in same goroutine)
 }
 ```
 
@@ -72,7 +73,8 @@ func main() {
 		action: "boot",
     }
 
-	ob.Notify("onApplicationStart", start)
+	ob.Notify("onApplicationStart", start) //Async notification
+	ob.NotifySync("onApplicationStart", start) // Sync notification (in same goroutine)
 	ob.Wait()
 }
 ```
