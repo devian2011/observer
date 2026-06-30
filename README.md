@@ -67,7 +67,7 @@ If you want to avoid global state, instantiate an isolated observer pool.
 ```go
 package main
 
-import "yourproject/observer"
+import "github.com/devian2011/observer"
 
 func main() {
     customObserver := observer.New()
