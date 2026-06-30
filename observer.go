@@ -24,6 +24,7 @@ func New() *Observer {
 	}
 }
 
+// Notify In this case all event handlers will be processed async (Golang Scheduler decides which will be executed and when)
 func (o *Observer) Notify(code EventCode, data EventData) {
 	if handlers, exists := o.handlers[code]; exists {
 		for _, h := range handlers {
@@ -52,7 +53,7 @@ func (o *Observer) Register(code EventCode, handlers ...EventHandler) {
 }
 
 func (o *Observer) EventCodes() []EventCode {
-	result := make([]EventCode, len(o.handlers))
+	result := make([]EventCode, 0, len(o.handlers))
 	for code := range o.handlers {
 		result = append(result, code)
 	}
@@ -62,7 +63,7 @@ func (o *Observer) EventCodes() []EventCode {
 
 func (o *Observer) GetFunctionsForEvent(code EventCode) []string {
 	if handlers, exists := o.handlers[code]; exists {
-		result := make([]string, len(handlers))
+		result := make([]string, 0, len(handlers))
 		for _, fn := range handlers {
 			result = append(result, runtime.FuncForPC(reflect.ValueOf(fn).Pointer()).Name())
 		}
